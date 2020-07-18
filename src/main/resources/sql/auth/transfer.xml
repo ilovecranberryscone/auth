@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.auth.mapper.TransferMapper">
+    
+    <insert id="insertTransferAuthentication" useGeneratedKeys="true" keyProperty="transferAuthenticationSerialNum" keyColumn="transfer_authentication_serial_num">
+        INSERT INTO transfer_authentication
+			(authentication_request_serial_num,
+			success_yn,
+			request_yn,
+			request_time)
+			VALUES
+			(#{authenticationRequestSerialNum}, 
+			null, 
+			'N', 
+			current_timestamp())
+	</insert>
+    
+    <select id="retrieveRequestYn" resultType="String" parameterType="java.lang.Integer">
+       SELECT request_yn
+		FROM transfer_authentication
+		where transfer_authentication_serial_num = #{transferAuthenticationSerialNum}
+    </select>
+    
+    <select id="retrieveTransferAuthenticationSerialNum" resultType="java.lang.Integer" parameterType="java.lang.Integer">
+       SELECT transfer_authentication_serial_num
+		FROM transfer_authentication
+		where authentication_request_serial_num = #{authenticationRequestSerialNum}
+    </select>
+    
+    <update id="updateRequestYn" parameterType="com.auth.vo.Transfer">
+        UPDATE transfer_authentication
+		SET request_yn=#{requestYn}
+		WHERE transfer_authentication_serial_num=#{transferAuthenticationSerialNum}
+    </update>
+  
+    <update id="updateSuccessYn" parameterType="com.auth.vo.Transfer">
+        UPDATE transfer_authentication
+		SET success_yn=#{successYn}
+		WHERE transfer_authentication_serial_num=#{transferAuthenticationSerialNum}
+    </update>
+</mapper>
