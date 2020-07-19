@@ -13,12 +13,12 @@ public class ExternalApiController {
 
 	@PostMapping("/info")
 	public ResultResponse retrieveBankAccountInfo() throws Exception {
-		return ResultResponse.builder().errCode(ErrorCodes.S0).errMsg("").data("").build();
+		return ResultResponse.builder().errCode(ErrorCodes.S0).errMsg("").build();
 	}
 
 	@PostMapping("/transfer")
 	public ResultResponse transferAnotherBank() throws Exception {
-		return ResultResponse.builder().errCode(ErrorCodes.S0).errMsg("").data("").build();
+		return ResultResponse.builder().errCode(ErrorCodes.S0).errMsg("").build();
 	}
 
 }
