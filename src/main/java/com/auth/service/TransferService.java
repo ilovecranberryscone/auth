@@ -90,9 +90,9 @@ public class TransferService {
 	}
 
 	public void transferAnotherBank(Transfer transfer, TransferRequest transferRequest) throws BizException {
-		String status = mapper.retrieveRequestYn(transfer.getTransferAuthenticationSerialNum());
-		if ("Y".equals(status)) {
-			throw new BizException(ErrorCodes.E2, "중복 이체가 발생하였습니다.");
+		Transfer.ynCode status = mapper.retrieveRequestYn(transfer.getTransferAuthenticationSerialNum());
+		if (Transfer.ynCode.Y == status) {
+			throw new BizException(ErrorCodes.E2, "중복 이체 요청이 발생하였습니다.");
 		}
 		transfer.setRequestYn(Transfer.ynCode.Y);
 		mapper.updateRequestYn(transfer);
@@ -104,7 +104,7 @@ public class TransferService {
 			throw new BizException(ErrorCodes.E2, "타행 계좌 이체시 에러가 발생하였습니다.");
 		}
 		if (ErrorCodes.S0 != response.getErrCode()) {
-			throw new BizException(ErrorCodes.E2, response.getErrMsg());
+			throw new BizException(response.getErrCode(), response.getErrMsg());
 		}
 	}
 
